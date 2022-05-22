@@ -13,11 +13,11 @@ import java.util.Optional;
 public class GroceryItemServiceImpl implements GroceryItemService {
 
     @Autowired
-    ItemRepository groceryItemRepo;
+    private ItemRepository repository;
 
     @Override
     public List<GroceryItem> save(List<GroceryItem> groceryItem) {
-        groceryItem.forEach(item -> groceryItemRepo.save(item));
+        groceryItem.forEach(item -> repository.save(item));
 
         return findAll();
     }
@@ -25,12 +25,12 @@ public class GroceryItemServiceImpl implements GroceryItemService {
     @Override
     public List<GroceryItem> update(List<GroceryItem> groceryItems) {
         groceryItems.forEach(item -> {
-            var groceryItem = groceryItemRepo.findById(item.getId());
+            var groceryItem = repository.findById(item.getId());
 
             if (groceryItem.isPresent()) {
-                groceryItemRepo.delete(groceryItem.get());
+                repository.delete(groceryItem.get());
 
-                groceryItemRepo.save(item);
+                repository.save(item);
             }
         });
 
@@ -39,40 +39,40 @@ public class GroceryItemServiceImpl implements GroceryItemService {
 
     @Override
     public List<GroceryItem> findAll() {
-        return groceryItemRepo.findAll();
+        return repository.findAll();
     }
 
     @Override
     public GroceryItem findById(String id) {
-        Optional<GroceryItem> groceryItemOptional = groceryItemRepo.findById(id);
+        Optional<GroceryItem> groceryItemOptional = repository.findById(id);
 
         return groceryItemOptional.orElse(null);
     }
 
     @Override
     public GroceryItem findByName(String name) {
-        return groceryItemRepo.findItemByName(name);
+        return repository.findItemByName(name);
     }
 
     @Override
     public List<GroceryItem> findByCategory(String category) {
-        return groceryItemRepo.findAll(category);
+        return repository.findAll(category);
     }
 
 
     @Override
     public List<GroceryItem> updateCategoryName(CategoryDTO categoryDTO) {
-        List<GroceryItem> list = groceryItemRepo.findAll(categoryDTO.getName());
+        List<GroceryItem> list = repository.findAll(categoryDTO.getName());
 
         list.forEach(item -> {
             item.setCategory(categoryDTO.getNewName());
         });
 
-        return groceryItemRepo.saveAll(list);
+        return repository.saveAll(list);
     }
 
     @Override
     public void delete(String id) {
-        groceryItemRepo.deleteById(id);
+        repository.deleteById(id);
     }
 }

@@ -1,6 +1,7 @@
 package com.oliveira.mdbspringboot.dto;
 
 public class CategoryDTO {
+
     String name;
     String newName;
 

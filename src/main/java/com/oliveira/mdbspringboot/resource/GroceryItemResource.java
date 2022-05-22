@@ -3,6 +3,7 @@ package com.oliveira.mdbspringboot.resource;
 import com.oliveira.mdbspringboot.dto.CategoryDTO;
 import com.oliveira.mdbspringboot.model.GroceryItem;
 import com.oliveira.mdbspringboot.service.GroceryItemService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -16,6 +17,7 @@ public class GroceryItemResource {
 
     private final GroceryItemService service;
 
+    @Autowired
     public GroceryItemResource(GroceryItemService service) {
         this.service = service;
     }
